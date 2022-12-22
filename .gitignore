@@ -1,4 +1,6 @@
 node_modules
 .idea
 .DS_Store
-*.{cert,key}
+server.cert
+server.key
+

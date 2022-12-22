@@ -1,0 +1,46 @@
+{
+  "name": "@workablehr/passport-slack-v2",
+  "version": "1.0.0",
+  "description": "Slack OAuth2 strategy for Passport",
+  "main": "lib/index.js",
+  "directories": {
+    "example": "example",
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha --require should -t 5000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Workable/passport-slack-v2.git"
+  },
+  "keywords": [
+    "passport",
+    "slack",
+    "v2"
+  ],
+  "author": "Ektor Vrettakis <ektor.vrettakis@workable.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Workable/passport-slack-v2/issues"
+  },
+  "homepage": "https://github.com/Workable/passport-slack-v2#readme",
+  "contributors": [],
+  "dependencies": {
+    "lodash.get": "^4.4.2",
+    "passport-oauth2": "^1.6.1"
+  },
+  "devDependencies": {
+    "cookie-parser": "^1.4.6",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.17.3",
+    "mocha": "^10.2.0",
+    "morgan": "^1.10.0",
+    "nock": "^13.2.9",
+    "passport": "^0.6.0",
+    "should": "^13.2.3"
+  }
+}
