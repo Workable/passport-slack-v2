@@ -52,35 +52,45 @@ app.listen(PORT);
 ```json
 {
   "ok": true,
-  "sub": "U0R7JM",
-  "https://slack.com/user_id": "U0R7JM",
-  "https://slack.com/team_id": "T0R7GR",
-  "email": "krane@slack-corp.com",
-  "email_verified": true,
-  "date_email_verified": 1622128723,
-  "name": "krane",
-  "picture": "https://secure.gravatar.com/....png",
-  "given_name": "Bront",
-  "family_name": "Labradoodle",
-  "locale": "en-US",
-  "https://slack.com/team_name": "kraneflannel",
-  "https://slack.com/team_domain": "kraneflannel",
-  "https://slack.com/user_image_24": "...",
-  "https://slack.com/user_image_32": "...",
-  "https://slack.com/user_image_48": "...",
-  "https://slack.com/user_image_72": "...",
-  "https://slack.com/user_image_192": "...",
-  "https://slack.com/user_image_512": "...",
-  "https://slack.com/team_image_34": "...",
-  "https://slack.com/team_image_44": "...",
-  "https://slack.com/team_image_68": "...",
-  "https://slack.com/team_image_88": "...",
-  "https://slack.com/team_image_102": "...",
-  "https://slack.com/team_image_132": "...",
-  "https://slack.com/team_image_230": "...",
-  "https://slack.com/team_image_default": true
+  "user": {
+    "id": "W012A3CDE",
+    "team_id": "T012AB3C4",
+    "name": "spengler",
+    "deleted": false,
+    "color": "9f69e7",
+    "real_name": "Egon Spengler",
+    "tz": "America/Los_Angeles",
+    "tz_label": "Pacific Daylight Time",
+    "tz_offset": -25200,
+    "profile": {
+      "avatar_hash": "ge3b51ca72de",
+      "status_text": "Print is dead",
+      "status_emoji": ":books:",
+      "real_name": "Egon Spengler",
+      "display_name": "spengler",
+      "real_name_normalized": "Egon Spengler",
+      "display_name_normalized": "spengler",
+      "email": "spengler@ghostbusters.example.com",
+      "image_original": "https://.../avatar/e3b51ca72dee4ef87916ae2b9240df50.jpg",
+      "image_24": "https://.../avatar/e3b51ca72dee4ef87916ae2b9240df50.jpg",
+      "image_32": "https://.../avatar/e3b51ca72dee4ef87916ae2b9240df50.jpg",
+      "image_48": "https://.../avatar/e3b51ca72dee4ef87916ae2b9240df50.jpg",
+      "image_72": "https://.../avatar/e3b51ca72dee4ef87916ae2b9240df50.jpg",
+      "image_192": "https://.../avatar/e3b51ca72dee4ef87916ae2b9240df50.jpg",
+      "image_512": "https://.../avatar/e3b51ca72dee4ef87916ae2b9240df50.jpg",
+      "team": "T012AB3C4"
+    },
+    "is_admin": true,
+    "is_owner": false,
+    "is_primary_owner": false,
+    "is_restricted": false,
+    "is_ultra_restricted": false,
+    "is_bot": false,
+    "updated": 1502138686,
+    "is_app_user": false,
+    "has_2fa": false
+  }
 }
-
 ```
 
 ## Usage
@@ -127,13 +137,13 @@ app.get('/auth/slack/callback',
 
 ### Custom Scopes
 #### User Scopes
-By default, the passport-slack-v2 strategy attempts to retrieve [the user's identity](https://api.slack.com/methods/openid.connect.userInfo) from Slack. This action requires at least the following scopes `openid`, `email`, and `profile`.
+By default, the passport-slack-v2 strategy attempts to retrieve [the user's identity](https://api.slack.com/methods/users.info) from Slack. This action requires at least the following scopes `users:read` and `users:read.email`.
 
 ```js
 passport.use(new SlackStrategy({
 	clientID: CLIENT_ID,
 	clientSecret: CLIENT_SECRET,
-	user_scope: ['openid', 'email', 'profile']
+	user_scope: ['users:read', 'users:read.email']
 }, () => { }));
 ```
 

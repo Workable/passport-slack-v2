@@ -31,7 +31,7 @@ passport.use(new SlackStrategy({
     clientSecret: CLIENT_SECRET,
     callbackURL:  CALLBACK_URL,
     scope:        [],
-    user_scope:   ['openid', 'email', 'profile'],
+    user_scope:   ['users:read', 'users:read.email'],
     passReqToCallback: true
   },
   (req, accessToken, refreshToken, profile, done) => {

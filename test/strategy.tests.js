@@ -12,16 +12,17 @@ describe('slack strategy', () => {
     };
     const strategy = new Strategy(options, () => {});
     strategy.name.should.eql('slack');
-    strategy.profileUrl.should.eql('https://slack.com/api/openid.connect.userInfo');
+    strategy.profileUrl.should.eql('https://slack.com/api/users.info');
     done();
   });
 
   describe('userProfile(accessToken, done)',  () => {
-    context('with [\'openid\', \'email\', \'profile\'] user_scope',  () => {
+    context('with [\'users:read\', \'users:read.email\'] user_scope',  () => {
       before(() => {
+        var profile = require('./profile.json');
         nock('https://slack.com')
-            .get('/api/openid.connect.userInfo')
-            .reply(200, require('./profile.json'));
+            .get(`/api/users.info?user=${profile.user.id}`)
+            .reply(200, profile);
       });
 
       it('passes id, firstname, lastname and profile picture fields to callback',  (done) => {
@@ -29,27 +30,34 @@ describe('slack strategy', () => {
           clientID: 'clientId',
           clientSecret: 'clientSecret',
           scope: [],
-          user_scope: ['openid', 'email', 'profile']
+          user_scope: ['users:read', 'users:read.email']
         };
         const accessToken = {
           user: {
             access_token: '8badf00d',
-            expires_in: 1
+            expires_in: 1,
+            user_id: 'W012A3CDE'
           }
         }
         const strategy = new Strategy(options,  () => {});
         strategy.userProfile(accessToken,  (err, profile) => {
           should.not.exist(err);
-          profile.id.should.eql('U0R7JM');
-          profile.team_id.should.eql('T0R7GR');
-          profile.name.givenName.should.eql('Bront');
-          profile.name.familyName.should.eql('Labradoodle');
-          profile.displayName.should.eql('krane');
-          profile.photos.should.eql([{
-            value: 'https://secure.gravatar.com/....png'
-          }]);
+          profile.id.should.eql('W012A3CDE');
+          profile.team_id.should.eql('T012AB3C4');
+          profile.name.givenName.should.eql('Egon');
+          profile.name.familyName.should.eql('Spengler');
+          profile.displayName.should.eql('spengler');
+          profile.photos.should.eql([
+            { value: 'https://.../avatar/e3b51ca72dee4ef87916ae2b9240df50.jpg' },
+            { value: 'https://.../avatar/e3b51ca72dee4ef87916ae2b9240df51.jpg' },
+            { value: 'https://.../avatar/e3b51ca72dee4ef87916ae2b9240df52.jpg' },
+            { value: 'https://.../avatar/e3b51ca72dee4ef87916ae2b9240df53.jpg' },
+            { value: 'https://.../avatar/e3b51ca72dee4ef87916ae2b9240df54.jpg' },
+            { value: 'https://.../avatar/e3b51ca72dee4ef87916ae2b9240df55.jpg' },
+            { value: 'https://.../avatar/e3b51ca72dee4ef87916ae2b9240df56.jpg' }
+          ]);
           profile.emails.should.eql([{
-            value: 'krane@slack-corp.com',
+            value: 'spengler@ghostbusters.example.com',
             verified: true
           }]);
           done();
